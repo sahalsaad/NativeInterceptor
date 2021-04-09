@@ -57,8 +57,10 @@ def listen():
         return windll.user32.CallNextHookEx(hook_id, nCode, wParam, lParam)
 
     def low_level_mouse_handler(nCode, wParam, lParam):
-        event = KeyboardEvent(MSG_TEXT.get(wParam, str(wParam)), lParam[0], lParam[1],
-                              lParam[2] == 32, lParam[3])
+        event = MouseEvent(MSG_TEXT.get(wParam, str(wParam)), lParam[0], lParam[1], lParam[2] == 32, lParam[3])
+        if wParam == win32con.WM_LBUTTONDOWN:
+            print('Click here')
+
         for handler in handlers:
             handler(event)
 
